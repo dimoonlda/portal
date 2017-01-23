@@ -6,6 +6,8 @@ import {Route, Router, IndexRoute, hashHistory} from 'react-router';
 import {Profile} from 'Profile';
 import {Main} from 'Main';
 import {Home} from 'Home';
+import Login from 'Login';
+
 import * as actions from 'actions';
 //var store = require('configureStore').configure();
 
@@ -21,6 +23,7 @@ ReactDOM.render(
     <Router history={hashHistory}>
         <Route path="/" component={Main}>
             <Route path="profile" component={Profile}/>
+            <Route path="login" component={Login}/>
             <IndexRoute component={Home}/>
         </Route>
     </Router>,

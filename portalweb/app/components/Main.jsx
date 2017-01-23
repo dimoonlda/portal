@@ -10,10 +10,10 @@ export var Main = React.createClass({
             <div>
                 <Header/>
                 <div className="row">
-                    <aside className="large-3 columns">
+                    <aside className="medium-2 large-2 columns">
                         <Navigation/>
                     </aside>
-                    <div className="large-9 columns" role="content">
+                    <div className="medium-10 large-10 columns" role="content">
                         {this.props.children}
                     </div>
                 </div>

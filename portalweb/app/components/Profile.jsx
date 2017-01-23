@@ -5,7 +5,7 @@ export var Profile = React.createClass({
         return (
             <div>
                 <h3><a href="#">Profile</a></h3>
-                <div className="row">
+                <div className="row columns">
                     <div className="callout secondary medium-12 columns">
                         <h5>Main information</h5>
                         <hr/>
@@ -42,7 +42,7 @@ export var Profile = React.createClass({
                         </form>
                     </div>
                 </div>
-                <div className="row">
+                <div className="row columns">
                     <div className="callout secondary medium-12 columns">
                         <h5>Change password</h5>
                         <hr/>
@@ -72,7 +72,6 @@ export var Profile = React.createClass({
                         </form>
                     </div>
                 </div>
-                <hr/>
             </div>
         )
     }
