@@ -1,10 +1,12 @@
 import * as redux from 'redux';
 import thunk from 'redux-thunk';
 
-//import {searchTextReducer, showCompletedReducer, todosReducer} from 'reducers'
+import {userProfileReducer/*, showCompletedReducer, todosReducer*/} from 'reducers'
 
 export var configure = (initialState = {}) => {
-  var reducer = redux.combineReducers({});
+  var reducer = redux.combineReducers({
+    userProfile: userProfileReducer
+  });
 
   var store = redux.createStore(reducer, initialState, redux.compose(
     redux.applyMiddleware(thunk),

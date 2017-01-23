@@ -1,7 +1,14 @@
 import React from 'react';
+import {connect} from 'react-redux';
+import {getUserById} from 'userActions';
 
 export var Profile = React.createClass({
+    componentWillMount: function () {
+        var {dispatch} = this.props;
+        dispatch(getUserById(100));
+    },
     render: function () {
+        var {userProfile} = this.props;
         return (
             <div>
                 <h3><a href="#">Profile</a></h3>
@@ -13,24 +20,24 @@ export var Profile = React.createClass({
                             <div className="row">
                                 <div className="medium-6 columns">
                                     <label>First name
-                                        <input type="text" placeholder="Input first name"/>
+                                        <input type="text" placeholder="Input first name" value={userProfile.firstName}/>
                                     </label>
                                 </div>
                                 <div className="medium-6 columns">
                                     <label>Last name
-                                        <input type="text" placeholder="Input last name"/>
+                                        <input type="text" placeholder="Input last name" value={userProfile.lastName}/>
                                     </label>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="medium-6 columns">
                                     <label>Email
-                                        <input type="email" placeholder="Input email"/>
+                                        <input type="email" placeholder="Input email" value={userProfile.email}/>
                                     </label>
                                 </div>
                                 <div className="medium-3 columns float-left">
                                     <label>Date of birth
-                                        <input type="date" placeholder="Input date of birth"/>
+                                        <input type="date" placeholder="Input date of birth" value={userProfile.dateOfBirth}/>
                                     </label>
                                 </div>
                             </div>
@@ -76,3 +83,8 @@ export var Profile = React.createClass({
         )
     }
 });
+
+export default connect(
+    (state) => {
+        return state;
+    })(Profile);
