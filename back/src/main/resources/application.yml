@@ -3,3 +3,17 @@ spring:
   jackson:
     serialization:
       write_dates_as_timestamps: false
+  jpa:
+    database: postgresql
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+server:
+  port: 8080
+---
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/portal
+    username: portal
+    password: portal

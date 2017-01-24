@@ -1,6 +1,7 @@
 .idea/
 *.iml
 portalweb/public/bundle.js
-portalweb/node_modules
-portalweb/target
-portalweb/node
+portalweb/node_modules/
+portalweb/target/
+portalweb/node/
+back/target/
