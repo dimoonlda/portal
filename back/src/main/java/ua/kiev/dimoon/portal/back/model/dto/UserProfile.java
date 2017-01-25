@@ -1,39 +1,39 @@
-package ua.kiev.dimoon.portal.back.model.domain;
+package ua.kiev.dimoon.portal.back.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import ua.kiev.dimoon.portal.back.model.domain.User;
 
-import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Objects;
 
 /**
- * Created by lutay.d on 23.01.2017.
+ * Created by lutay.d on 25.01.2017.
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@Entity(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_gen")
-    @SequenceGenerator(name = "user_gen", sequenceName = "users_id_seq", allocationSize = 1)
+public class UserProfile {
     private Long id;
-    @Column(nullable = false)
     private String email;
-    @Column(nullable = false)
     private String login;
-    @Column(nullable = false)
-    private String password;
-    @Column(name = "firstname")
     private String firstName;
-    @Column(name = "lastname")
     private String lastName;
-    @Column(name = "dateofbirth")
     private LocalDate dateOfBirth;
+
+    public UserProfile() {
+    }
+
+    public UserProfile(User user) {
+        this.id = user.getId();
+        this.email = user.getEmail();
+        this.login = user.getLogin();
+        this.firstName = user.getFirstName();
+        this.lastName = user.getLastName();
+        this.dateOfBirth = user.getDateOfBirth();
+    }
 
     public Long getId() {
         return id;
     }
 
-    public User setId(Long id) {
+    public UserProfile setId(Long id) {
         this.id = id;
         return this;
     }
@@ -42,7 +42,7 @@ public class User {
         return email;
     }
 
-    public User setEmail(String email) {
+    public UserProfile setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -51,17 +51,8 @@ public class User {
         return login;
     }
 
-    public User setLogin(String login) {
+    public UserProfile setLogin(String login) {
         this.login = login;
-        return this;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public User setPassword(String password) {
-        this.password = password;
         return this;
     }
 
@@ -69,7 +60,7 @@ public class User {
         return firstName;
     }
 
-    public User setFirstName(String firstName) {
+    public UserProfile setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
@@ -78,7 +69,7 @@ public class User {
         return lastName;
     }
 
-    public User setLastName(String lastName) {
+    public UserProfile setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
@@ -87,14 +78,14 @@ public class User {
         return dateOfBirth;
     }
 
-    public User setDateOfBirth(LocalDate dateOfBirth) {
+    public UserProfile setDateOfBirth(LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
         return this;
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserProfile{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", login='" + login + '\'' +
@@ -102,18 +93,5 @@ public class User {
                 ", lastName='" + lastName + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(getId(), user.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
     }
 }

@@ -1,4 +1,4 @@
-package ua.kiev.dimoon.portal.back.model.domain;
+package ua.kiev.dimoon.portal.back.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

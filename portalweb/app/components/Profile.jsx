@@ -1,11 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import {getUserById} from 'userActions';
+import {getUserProfile} from 'userActions';
 
 export var Profile = React.createClass({
     componentWillMount: function () {
         var {dispatch} = this.props;
-        dispatch(getUserById(100));
+        dispatch(getUserProfile());
     },
     render: function () {
         var {userProfile} = this.props;

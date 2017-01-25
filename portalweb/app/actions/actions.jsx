@@ -1,7 +1,7 @@
 
-export var setUserProfile = (user) => {
+export var setUserProfile = (userProfile) => {
     return {
         type: 'SET_USER_PROFILE',
-        user
+        userProfile
     }
 };
