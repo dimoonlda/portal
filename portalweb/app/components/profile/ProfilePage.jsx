@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react';
 import {connect} from 'react-redux';
 
 import ProfileView from 'ProfileView';
-import * as userProfileActions from '../actions/userProfileActions';
+import * as userProfileActions from '../../actions/userProfileActions';
 
 class ProfilePage extends React.Component {
     constructor(props) {
