@@ -1,5 +1,7 @@
 package ua.kiev.dimoon.portal.back.services;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.kiev.dimoon.portal.back.model.domain.User;
@@ -18,6 +20,8 @@ import java.util.concurrent.CompletableFuture;
  */
 @Service
 public class UserServiceImpl implements UserService {
+
+    private static final Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
 
     private UserRepository userRepository;
 
@@ -50,7 +54,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public CompletableFuture<Optional<UserProfile>> saveProfile(UserProfile userProfile) {
-        return userRepository.findOneById(userProfile.getId())
+        LOG.debug("Saving user profile: {}", userProfile);
+        return userRepository.findOneById(1L)
                 .thenApply(user -> {
                     if (Objects.isNull(user)) {
                         return Optional.empty();
@@ -60,7 +65,7 @@ public class UserServiceImpl implements UserService {
                             .setFirstName(userProfile.getFirstName())
                             .setLastName(userProfile.getLastName());
                     userRepository.save(user);
-                    return Optional.of(userProfile);
+                    return Optional.of(new UserProfile(user));
                 });
     }
 }

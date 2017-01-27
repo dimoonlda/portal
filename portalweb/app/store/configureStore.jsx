@@ -1,7 +1,7 @@
 import * as redux from 'redux';
 import thunk from 'redux-thunk';
 
-import {userProfileReducer/*, showCompletedReducer, todosReducer*/} from 'reducers'
+import userProfileReducer from 'userProfileReducer'
 
 export var configure = (initialState = {}) => {
   var reducer = redux.combineReducers({

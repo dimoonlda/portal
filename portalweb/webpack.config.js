@@ -40,10 +40,10 @@ module.exports = {
     alias: {
       app: 'app',
       applicationStyles: 'app/styles/app.scss',
-      actions: 'app/actions/actions.jsx',
-      userActions: 'app/actions/userActions.jsx',
-      reducers: 'app/reducers/reducers.jsx',
-      configureStore: 'app/store/configureStore.jsx'
+      userProfileActions: 'app/actions/userProfileActions.jsx',
+      userProfileReducer: 'app/reducers/userProfileReducer.jsx',
+      configureStore: 'app/store/configureStore.jsx',
+      actionTypes: 'app/actions/actionTypes.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },
