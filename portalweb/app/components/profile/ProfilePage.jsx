@@ -4,21 +4,25 @@ import {connect} from 'react-redux';
 import ProfileView from 'ProfileView';
 import * as userProfileActions from '../../actions/userProfileActions';
 
+/**
+ * Container component for user profile
+ */
 class ProfilePage extends React.Component {
     constructor(props) {
         super(props);
     }
 
-    // componentWillMount() {
-    //     this.props.loadUserProfile();
-    // }
+    componentWillMount() {
+        this.props.loadUserProfile();
+    }
 
     render() {
         console.log('ProfilePage: render.', this.props.userProfile);
         const userProfile = this.props.userProfile;
         return (
             <div>
-                <ProfileView userProfile={userProfile}/>
+                <ProfileView userProfile={userProfile}
+                             updateUserProfile={this.props.updateUserProfile}/>
             </div>
         )
     }
@@ -35,12 +39,15 @@ const mapStateToProps = (state) => {
     };
 };
 
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         loadUserProfile: () => {
-//             dispatch(userProfileActions.loadUserProfile());
-//         }
-//     }
-// };
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loadUserProfile: () => {
+            dispatch(userProfileActions.loadUserProfile());
+        },
+        updateUserProfile: (userProfile) => {
+            dispatch(userProfileActions.updateUserProfile(userProfile));
+        }
+    }
+};
 
-export default connect(mapStateToProps, /*mapDispatchToProps*/)(ProfilePage);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);

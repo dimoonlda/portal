@@ -3,6 +3,9 @@ import {connect} from 'react-redux';
 
 import ProfileForm from 'ProfileForm';
 
+/**
+ * Presentation component for viewing user profile
+ */
 class ProfileView extends React.Component {
     constructor(props) {
         super(props);
@@ -10,26 +13,55 @@ class ProfileView extends React.Component {
         this.state = {
             userProfile: Object.assign({}, this.props.userProfile),
             saving: false,
-            isEditing: false
+            isEditing: false,
+            userProfileBeforeEdit: {}
         };
-        this.toggleEdit = this.toggleEdit.bind(this);
     }
 
     componentDidMount() {
 
     }
 
-    toggleEdit() {
-        this.setState({isEditing: true})
-    }
+    toggleEdit = () => {
+        this.setState({
+            isEditing: true,
+            userProfileBeforeEdit: Object.assign({}, this.state.userProfile)
+        })
+    };
 
     componentWillReceiveProps(nextProps) {
         //Update state when receive new props value
         this.setState({
-            ...this.state,
             userProfile: Object.assign({}, nextProps.userProfile)
         });
     }
+
+    updateProfileState = (event) => {
+        const field = event.target.name;
+        const userProfile = this.state.userProfile;
+        userProfile[field] = event.target.value;
+        return this.setState({userProfile: userProfile});
+    };
+
+    saveProfile = (event) => {
+        event.preventDefault();
+        console.log('Save Profile button event.', this.state);
+        this.props.updateUserProfile(this.state.userProfile);
+        this.setState({
+            isEditing: false,
+            userProfileBeforeEdit: {}
+        });
+    };
+
+    cancelProfileForm = (event) => {
+        event.preventDefault();
+        console.log('Cancel Profile button event.');
+        this.setState({
+            isEditing: false,
+            userProfile: Object.assign({}, this.state.userProfileBeforeEdit),
+            userProfileBeforeEdit: {}
+        });
+    };
 
     render() {
         const renderProfileView = () => {
@@ -71,7 +103,11 @@ class ProfileView extends React.Component {
 
         const renderProfileForm = () => {
             return (
-                <ProfileForm userProfile={this.state.userProfile}/>
+                <ProfileForm userProfile={this.state.userProfile}
+                             onSave={this.saveProfile}
+                             onCancel={this.cancelProfileForm}
+                             onChange={this.updateProfileState}
+                />
             )
         };
 
@@ -85,7 +121,8 @@ class ProfileView extends React.Component {
 }
 
 ProfileView.propTypes = {
-    userProfile: PropTypes.object.isRequired
+    userProfile: PropTypes.object.isRequired,
+    updateUserProfile: PropTypes.func.isRequired
 };
 
 export default ProfileView;
