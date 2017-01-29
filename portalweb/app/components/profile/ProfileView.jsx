@@ -14,7 +14,8 @@ class ProfileView extends React.Component {
             userProfile: Object.assign({}, this.props.userProfile),
             saving: false,
             isEditing: false,
-            userProfileBeforeEdit: {}
+            userProfileBeforeEdit: {},
+            canEdit: this.props.canEdit
         };
     }
 
@@ -32,7 +33,10 @@ class ProfileView extends React.Component {
     componentWillReceiveProps(nextProps) {
         //Update state when receive new props value
         this.setState({
-            userProfile: Object.assign({}, nextProps.userProfile)
+            userProfile: Object.assign({}, nextProps.userProfile),
+            saving: false,
+            isEditing: false,
+            canEdit: nextProps.canEdit
         });
     }
 
@@ -48,7 +52,7 @@ class ProfileView extends React.Component {
         console.log('Save Profile button event.', this.state);
         this.props.updateUserProfile(this.state.userProfile);
         this.setState({
-            isEditing: false,
+            saving: true,
             userProfileBeforeEdit: {}
         });
     };
@@ -92,7 +96,9 @@ class ProfileView extends React.Component {
                         </div>
                         <div className="row">
                             <div className="medium-12 columns">
-                                <input type="button" onClick={this.toggleEdit} className="button float-right"
+                                <input type="button" onClick={this.toggleEdit}
+                                       className="button float-right"
+                                       disabled={!this.state.canEdit}
                                        value="Edit"/>
                             </div>
                         </div>
@@ -107,6 +113,7 @@ class ProfileView extends React.Component {
                              onSave={this.saveProfile}
                              onCancel={this.cancelProfileForm}
                              onChange={this.updateProfileState}
+                             saving={this.state.saving}
                 />
             )
         };
@@ -122,7 +129,8 @@ class ProfileView extends React.Component {
 
 ProfileView.propTypes = {
     userProfile: PropTypes.object.isRequired,
-    updateUserProfile: PropTypes.func.isRequired
+    updateUserProfile: PropTypes.func.isRequired,
+    canEdit: PropTypes.bool.isRequired
 };
 
 export default ProfileView;

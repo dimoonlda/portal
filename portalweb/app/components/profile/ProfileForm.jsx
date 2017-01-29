@@ -59,7 +59,9 @@ class ProfileForm extends React.Component {
                             <div className="medium-12 columns">
                                 <div className="button-group float-right">
                                     <input type="submit" className="button"
-                                           value="Save" onClick={this.props.onSave}/>
+                                           value={this.props.saving ? 'Saving...' : 'Save'}
+                                           disabled={this.props.saving}
+                                           onClick={this.props.onSave}/>
                                     <input type="button" className="button"
                                            value="Cancel" onClick={this.props.onCancel}/>
                                 </div>
@@ -76,7 +78,8 @@ ProfileForm.propTypes = {
     userProfile: PropTypes.object.isRequired,
     onChange: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
-    onCancel: PropTypes.func.isRequired
+    onCancel: PropTypes.func.isRequired,
+    saving: PropTypes.bool
 };
 
 export default ProfileForm;

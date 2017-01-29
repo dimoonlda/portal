@@ -1,4 +1,7 @@
 export default {
-  userProfile: {},
-  hobbies: []
+    userProfile: {
+        data: {},
+        isLoading: false
+    },
+    hobbies: []
 }

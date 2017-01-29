@@ -92,6 +92,11 @@ public class UserControllerImpl implements UserController {
             if (Objects.nonNull(throwable)) {
                 deferredResult.setErrorResult(throwable.getCause());
             } else {
+                try {
+                    Thread.sleep(3000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 deferredResult.setResult(userProfileOptional
                         .map(savedUserProfile -> new ResponseEntity<>(new BaseResult<>(savedUserProfile), HttpStatus.OK))
                         .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND))

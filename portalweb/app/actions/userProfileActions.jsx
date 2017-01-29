@@ -2,6 +2,13 @@ import axios from 'axios';
 
 import * as actionsTypes from 'actionTypes';
 
+export const loadingUserProfile = () => {
+    console.log('LOADING PROFILE...');
+    return {
+        type: actionsTypes.LOADING_USER_PROFILE
+    }
+};
+
 export const loadUserProfileSuccess = (userProfile) => {
     return {
         type: actionsTypes.LOAD_USER_PROFILE_SUCCESS,
@@ -18,6 +25,7 @@ export const updateUserProfileSuccess = (userProfile) => {
 
 export const loadUserProfile = () => {
     return (dispatch) => {
+        dispatch(loadingUserProfile());
         axios.get(`http://localhost:8080/users/profile`)
             .then(function (response) {
                 if (response.status === 200) {
