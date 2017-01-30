@@ -6,6 +6,7 @@ export default function userProfileReducer(state = initialState.userProfile, act
         case actionsTypes.LOAD_USER_PROFILE_SUCCESS:
             return {
                 isLoading: false,
+                error: null,
                 data: action.userProfile
             };
             break;

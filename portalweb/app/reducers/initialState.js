@@ -1,7 +1,8 @@
 export default {
     userProfile: {
         data: {},
-        isLoading: false
+        isLoading: false,
+        error: undefined
     },
     hobbies: []
 }

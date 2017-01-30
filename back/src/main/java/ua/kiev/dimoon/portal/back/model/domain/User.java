@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Created by lutay.d on 23.01.2017.
@@ -16,18 +17,27 @@ public class User {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_gen")
     @SequenceGenerator(name = "user_gen", sequenceName = "users_id_seq", allocationSize = 1)
     private Long id;
+
     @Column(nullable = false)
     private String email;
+
     @Column(nullable = false)
     private String login;
+
     @Column(nullable = false)
     private String password;
+
     @Column(name = "firstname")
     private String firstName;
+
     @Column(name = "lastname")
     private String lastName;
+
     @Column(name = "dateofbirth")
     private LocalDate dateOfBirth;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private Set<Device> devices;
 
     public Long getId() {
         return id;
@@ -92,15 +102,26 @@ public class User {
         return this;
     }
 
+    public Set<Device> getDevices() {
+        return devices;
+    }
+
+    public User setDevices(Set<Device> devices) {
+        this.devices = devices;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", dateOfBirth=" + dateOfBirth +
+                ", devices=" + devices +
                 '}';
     }
 
