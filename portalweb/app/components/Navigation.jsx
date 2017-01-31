@@ -14,6 +14,9 @@ export var Navigation = React.createClass({
                         <Link to="/login" activeClassName="active-link">Login</Link>
                     </li>
                     <li>
+                        <Link to="/devices" activeClassName="active-link">Devices</Link>
+                    </li>
+                    <li>
                         <Link to="/profile" activeClassName="active-link">Profile</Link>
                     </li>
                 </ul>

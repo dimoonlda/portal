@@ -2,7 +2,21 @@ export default {
     userProfile: {
         data: {},
         isLoading: false,
-        error: undefined
+        error: null
     },
-    hobbies: []
+    userDevices: {
+        devices: [],
+        isLoading: false,
+        error: null
+    },
+    deviceTypes: {
+        types: [],
+        isLoading: false,
+        error: null
+    },
+    deviceBrands: {
+        brands: [],
+        isLoading: false,
+        error: null
+    }
 }

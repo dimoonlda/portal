@@ -21,7 +21,7 @@ import java.util.Objects;
  */
 @Api
 @RestController
-@RequestMapping("/deviseTypes")
+@RequestMapping("/deviceTypes")
 public class DeviceTypeControllerImpl implements DeviceTypeController {
 
     private DeviceTypeRepository deviceTypeRepository;

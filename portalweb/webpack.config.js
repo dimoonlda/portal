@@ -36,13 +36,16 @@ module.exports = {
       'node_modules',
       './app/components',
         './app/components/profile',
+        './app/components/devices',
       './app/api'
     ],
     alias: {
       app: 'app',
       applicationStyles: 'app/styles/app.scss',
       userProfileActions: 'app/actions/userProfileActions.jsx',
+        deviceActions: 'app/actions/deviceActions.jsx',
       userProfileReducer: 'app/reducers/userProfileReducer.jsx',
+        deviceReducer: 'app/reducers/deviceReducer.jsx',
       configureStore: 'app/store/configureStore.jsx',
       actionTypes: 'app/actions/actionTypes.jsx'
     },
