@@ -1,7 +1,9 @@
 package ua.kiev.dimoon.portal.back.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -19,13 +21,15 @@ public class Device {
     private String title;
 
     @JsonIdentityReference(alwaysAsId = true)
-    @Column(nullable = false)
+    @JoinColumn(name = "type_id", nullable = false)
+    @ManyToOne
     private DeviceType type;
 
     private String model;
 
     @JsonIdentityReference(alwaysAsId = true)
-    @Column(nullable = false)
+    @JoinColumn(name = "brand_id", nullable = false)
+    @ManyToOne
     private DeviceBrand brand;
 
     @Column(name = "dateofmanufacturing")
@@ -33,6 +37,8 @@ public class Device {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonBackReference
+    //@JsonManagedReference
     private User user;
 
     private String url;

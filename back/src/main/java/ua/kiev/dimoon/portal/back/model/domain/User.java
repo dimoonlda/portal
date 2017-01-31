@@ -1,6 +1,8 @@
 package ua.kiev.dimoon.portal.back.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -36,6 +38,8 @@ public class User {
     @Column(name = "dateofbirth")
     private LocalDate dateOfBirth;
 
+    //@JsonBackReference
+    @JsonManagedReference
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Device> devices;
 

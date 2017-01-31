@@ -1,0 +1,1 @@
+ALTER TABLE public.devices ADD title VARCHAR(255) NULL;

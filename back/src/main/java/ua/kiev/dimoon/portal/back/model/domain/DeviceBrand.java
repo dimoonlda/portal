@@ -22,6 +22,9 @@ public class DeviceBrand {
     @Column(nullable = false)
     private String title;
 
+    public DeviceBrand() {
+    }
+
     public Integer getId() {
         return id;
     }

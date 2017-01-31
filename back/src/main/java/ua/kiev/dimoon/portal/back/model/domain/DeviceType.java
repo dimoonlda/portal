@@ -21,6 +21,9 @@ public class DeviceType {
     @Column(nullable = false)
     private String title;
 
+    public DeviceType() {
+    }
+
     public DeviceType(Integer id, String title) {
         this.id = id;
         this.title = title;

@@ -7,11 +7,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 import ua.kiev.dimoon.portal.back.controllers.interfaces.UserController;
+import ua.kiev.dimoon.portal.back.model.domain.Device;
 import ua.kiev.dimoon.portal.back.model.dto.BaseResult;
 import ua.kiev.dimoon.portal.back.model.domain.User;
 import ua.kiev.dimoon.portal.back.model.dto.UserProfile;
+import ua.kiev.dimoon.portal.back.repositories.DeviceRepository;
 import ua.kiev.dimoon.portal.back.services.interfaces.UserService;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -105,4 +108,23 @@ public class UserControllerImpl implements UserController {
         });
         return deferredResult;
     }
+
+/*
+    @Override
+    @RequestMapping(value = "/{userId}/devices", method = RequestMethod.GET)
+    public DeferredResult<ResponseEntity<BaseResult<List<Device>>>> getDevicesByUserId(@PathVariable Long userId) {
+        DeferredResult<ResponseEntity<BaseResult<List<Device>>>> deferredResult = new DeferredResult<>();
+        deviceRepository.findByUserId(userId).whenComplete((devices, throwable) -> {
+            if (Objects.nonNull(throwable)) {
+                deferredResult.setErrorResult(throwable.getCause());
+            } else {
+                deferredResult.setResult(
+                        devices.isEmpty() ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                                : new ResponseEntity<>(new BaseResult<>(devices), HttpStatus.OK)
+                );
+            }
+        });
+        return deferredResult;
+    }
+*/
 }
