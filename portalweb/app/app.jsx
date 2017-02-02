@@ -9,6 +9,7 @@ import {Home} from 'Home';
 import Login from 'Login';
 import DevicesPage from 'DevicesPage';
 import DevicePage from 'DevicePage';
+import NewDevicePage from 'NewDevicePage';
 
 import * as userProfileActions from 'userProfileActions';
 import * as deviceActions from 'deviceActions';
@@ -31,6 +32,7 @@ ReactDOM.render(
             <Route path="/" component={Main}>
                 <Route path="/profile" component={ProfilePage}/>
                 <Route path="/devices" component={DevicesPage}>
+                    <Route path="/devices/new" component={NewDevicePage}/>
                     <Route path="/devices/:id" component={DevicePage}/>
                 </Route>
                 <Route path="/login" component={Login}/>
