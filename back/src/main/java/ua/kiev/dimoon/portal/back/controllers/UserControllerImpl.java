@@ -74,7 +74,7 @@ public class UserControllerImpl implements UserController {
                 deferredResult.setErrorResult(throwable.getCause());
             } else {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -96,7 +96,7 @@ public class UserControllerImpl implements UserController {
                 deferredResult.setErrorResult(throwable.getCause());
             } else {
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(1000);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
