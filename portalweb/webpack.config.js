@@ -37,6 +37,7 @@ module.exports = {
       './app/components',
         './app/components/profile',
         './app/components/devices',
+        './app/components/common',
       './app/api'
     ],
     alias: {

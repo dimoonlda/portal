@@ -1,5 +1,7 @@
 import React, {PropTypes} from 'react';
 
+import SelectComponent from 'SelectComponent';
+
 /**
  * Presentation component for editing user profile
  */
@@ -11,8 +13,17 @@ class DeviceForm extends React.Component {
         };
     }
 
+    getDeviceTypesAsSelectOptions(deviceTypes) {
+        return deviceTypes.map(type => {
+            return {value: type.id, name: type.title}
+        })
+    }
+
     render() {
         let {title, type, model, brand, dateOfManufacturing, url} = this.state.device;
+        const {deviceTypes, deviceBrands} = this.props;
+        console.log('deviceTypes: ', deviceTypes);
+        console.log('deviceBrands: ', deviceBrands);
         return (
             <div className="row columns">
                 <div className="callout secondary medium-12 columns">
@@ -29,10 +40,11 @@ class DeviceForm extends React.Component {
                         </div>
                         <div className="row columns">
                             <label>Type
-                                <input type="text" name="type"
-                                       placeholder="Input type"
-                                       value={type}
-                                       onChange={this.props.onChange}/>
+                                <SelectComponent
+                                    options={this.getDeviceTypesAsSelectOptions(deviceTypes)}
+                                    selectedValue={type}
+                                    fieldName="type"
+                                    onChange={this.props.onChange}/>
                             </label>
                         </div>
                         <div className="row columns">

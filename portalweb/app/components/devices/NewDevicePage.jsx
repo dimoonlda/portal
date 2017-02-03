@@ -18,7 +18,13 @@ class NewDevicePage extends React.Component {
         const {deviceTypes, deviceBrands} = this.props;
         return (
             <div className="row columns">
-                <DeviceForm device={device} onChange="" onSave="" onCancel=""/>
+                <DeviceForm device={device}
+                            onChange=""
+                            onSave=""
+                            onCancel=""
+                            deviceBrands={deviceBrands}
+                            deviceTypes={deviceTypes}
+                />
             </div>
         )
     }
