@@ -19,6 +19,12 @@ class DeviceForm extends React.Component {
         })
     }
 
+    getDeviceBrandsAsSelectOptions(deviceBrands) {
+        return deviceBrands.map(brand => {
+            return {value: brand.id, name: brand.title}
+        })
+    }
+
     render() {
         let {title, type, model, brand, dateOfManufacturing, url} = this.state.device;
         const {deviceTypes, deviceBrands} = this.props;
@@ -49,10 +55,11 @@ class DeviceForm extends React.Component {
                         </div>
                         <div className="row columns">
                             <label>Brand
-                                <input type="text" name="brand"
-                                       placeholder="Input brand"
-                                       value={brand}
-                                       onChange={this.props.onChange}/>
+                                <SelectComponent
+                                    options={this.getDeviceBrandsAsSelectOptions(deviceBrands)}
+                                    selectedValue={brand}
+                                    fieldName="brand"
+                                    onChange={this.props.onChange}/>
                             </label>
                         </div>
                         <div className="row columns">
@@ -99,13 +106,28 @@ class DeviceForm extends React.Component {
 }
 
 DeviceForm.propTypes = {
-    device: PropTypes.object.isRequired,
+    device: React.PropTypes.shape({
+        id: React.PropTypes.number,
+        title: React.PropTypes.string,
+        type: React.PropTypes.number,
+        model: React.PropTypes.string,
+        brand: React.PropTypes.number,
+        dateOfManufacturing: React.PropTypes.string,
+        url: React.PropTypes.string
+    }).isRequired,
     deviceTypes: PropTypes.array,
     deviceBrands: PropTypes.array,
     onChange: PropTypes.func.isRequired,
     onSave: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired,
     saving: PropTypes.bool
+};
+
+DeviceForm.defaultProps = {
+    deviceTypes: [],
+    deviceBrands: [],
+    saving: false,
+    device: {}
 };
 
 export default DeviceForm;

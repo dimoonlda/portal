@@ -85,4 +85,24 @@ function mapStateToProps(state, ownProps) {
     }
 }
 
+DevicePage.propTypes = {
+    device: React.PropTypes.shape({
+        id: React.PropTypes.number,
+        title: React.PropTypes.string,
+        type: React.PropTypes.number,
+        model: React.PropTypes.string,
+        brand: React.PropTypes.number,
+        dateOfManufacturing: React.PropTypes.string,
+        url: React.PropTypes.string
+    }).isRequired,
+    deviceBrand: React.PropTypes.shape({
+        id: React.PropTypes.number.isRequired,
+        title: React.PropTypes.string.isRequired
+    }).isRequired,
+    deviceTitle: React.PropTypes.shape({
+        id: React.PropTypes.number.isRequired,
+        title: React.PropTypes.string.isRequired
+    }).isRequired
+};
+
 export default connect(mapStateToProps)(DevicePage);

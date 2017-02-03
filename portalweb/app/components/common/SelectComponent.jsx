@@ -12,7 +12,7 @@ class SelectComponent extends React.Component {
     componentWillReceiveProps(nextProps) {
         if (this.props.options.length < nextProps.options.length) {
             this.setState({
-                options: Object.assign({}, nextProps.options)
+                options: nextProps.options
             })
         }
         if (this.props.selectedValue != nextProps.selectedValue) {
@@ -25,7 +25,7 @@ class SelectComponent extends React.Component {
         return (
             <select value={this.state.selectedValue} onChange={this.props.onChange}>
                 {options.map(option => {
-                    return <option value={option.value}>{option.name}</option>
+                    return <option value={option.value} key={option.value}>{option.name}</option>
                 })}
             </select>
         )
@@ -37,6 +37,10 @@ SelectComponent.propTypes = {
     selectedValue: PropTypes.string,
     onChange: PropTypes.func,
     fieldName: PropTypes.string.isRequired
+};
+
+SelectComponent.defaultProps = {
+    options: []
 };
 
 export default SelectComponent;
