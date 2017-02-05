@@ -8,9 +8,6 @@ import javax.persistence.*;
 import java.util.Objects;
 
 
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Entity(name = "device_types")
 public class DeviceType {

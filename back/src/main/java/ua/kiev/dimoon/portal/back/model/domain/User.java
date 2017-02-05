@@ -38,7 +38,6 @@ public class User {
     @Column(name = "dateofbirth")
     private LocalDate dateOfBirth;
 
-    //@JsonBackReference
     @JsonManagedReference
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private Set<Device> devices;

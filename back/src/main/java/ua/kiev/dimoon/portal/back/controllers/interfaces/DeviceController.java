@@ -12,4 +12,6 @@ import java.util.List;
  */
 public interface DeviceController {
     DeferredResult<ResponseEntity<BaseResult<List<Device>>>> getUserDevices();
+
+    DeferredResult<ResponseEntity<BaseResult<Device>>> createOrUpdate(Device device);
 }

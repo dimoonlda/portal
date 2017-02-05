@@ -16,4 +16,7 @@ public interface DeviceRepository extends Repository<Device, Long> {
     @Async
     @Query(value = "select * from devices where user_id = ?1", nativeQuery = true)
     CompletableFuture<List<Device>> findByUserId(Long user_id);
+
+    @Async
+    <S extends Device> CompletableFuture<S> save(S device);
 }

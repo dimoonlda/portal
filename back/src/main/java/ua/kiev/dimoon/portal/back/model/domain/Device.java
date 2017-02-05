@@ -1,9 +1,6 @@
 package ua.kiev.dimoon.portal.back.model.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -20,6 +17,9 @@ public class Device {
     @Column(nullable = false)
     private String title;
 
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     @JoinColumn(name = "type_id", nullable = false)
     @ManyToOne
@@ -27,6 +27,9 @@ public class Device {
 
     private String model;
 
+    @JsonIdentityInfo(
+            generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     @JoinColumn(name = "brand_id", nullable = false)
     @ManyToOne
@@ -38,7 +41,6 @@ public class Device {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonBackReference
-    //@JsonManagedReference
     private User user;
 
     private String url;
@@ -70,6 +72,12 @@ public class Device {
         return this;
     }
 
+    @JsonProperty("type")
+    public Device setType(Integer typeId) {
+        this.type = new DeviceType().setId(typeId);
+        return this;
+    }
+
     public String getModel() {
         return model;
     }
@@ -85,6 +93,12 @@ public class Device {
 
     public Device setBrand(DeviceBrand brand) {
         this.brand = brand;
+        return this;
+    }
+
+    @JsonProperty("brand")
+    public Device setBrand(Integer brandId) {
+        this.brand = new DeviceBrand().setId(brandId);
         return this;
     }
 
@@ -124,7 +138,7 @@ public class Device {
                 ", model='" + model + '\'' +
                 ", brand=" + brand +
                 ", dateOfManufacturing=" + dateOfManufacturing +
-                ", user=" + user +
+                ", user=" + user.getId() +
                 ", url='" + url + '\'' +
                 '}';
     }

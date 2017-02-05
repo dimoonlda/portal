@@ -9,9 +9,6 @@ import javax.persistence.*;
 /**
  * Created by lutay.d on 30.01.2017.
  */
-@JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 @Entity(name = "device_brands")
 public class DeviceBrand {
