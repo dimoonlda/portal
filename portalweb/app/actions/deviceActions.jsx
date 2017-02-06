@@ -30,6 +30,43 @@ export const loadUserDevices = () => {
     }
 };
 
+export const creatingUserDevice = () => {
+    return {
+        type: actionsTypes.CREATING_USER_DEVICE
+    }
+};
+
+export const createUserDeviceSuccess = (device) => {
+    return {
+        type: actionsTypes.CREATE_USER_DEVICE_SUCCESS,
+        device
+    }
+};
+
+export const createUserDevice = (device) => {
+    console.log('Create device:', device);
+    return (dispatch) => {
+        dispatch(creatingUserDevice());
+        axios.post("http://localhost:8080/devices",
+            {
+                "title": device.title,
+                "model": device.model,
+                "dateOfManufacturing": device.dateOfManufacturing,
+                "url": device.url,
+                "type": device.type,
+                "brand": device.brand
+            }
+        ).then(function (response) {
+            if (response.status === 200) {
+                dispatch(createUserDeviceSuccess(response.data.data))
+            }
+        }).catch(function (error) {
+            console.log(error);
+        })
+    }
+};
+
+//Start device types
 export const loadingDeviceTypes = () => {
     return {
         type: actionsTypes.LOADING_DEVICE_TYPES
@@ -57,7 +94,9 @@ export const loadDeviceTypes = () => {
             });
     }
 };
+//End device types
 
+//Start device brands
 export const loadingDeviceBrands = () => {
     return {
         type: actionsTypes.LOADING_DEVICE_BRANDS
@@ -85,3 +124,4 @@ export const loadDeviceBrands = () => {
             });
     }
 };
+//End device brands

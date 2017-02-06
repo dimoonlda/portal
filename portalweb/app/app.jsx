@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
-import {Route, Router, IndexRoute, hashHistory} from 'react-router';
+import {Route, Router, IndexRoute, browserHistory} from 'react-router';
 
 import ProfilePage from 'ProfilePage';
 import {Main} from 'Main';
@@ -28,7 +28,7 @@ require('style!css!sass!applicationStyles');
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router history={hashHistory}>
+        <Router history={browserHistory}>
             <Route path="/" component={Main}>
                 <Route path="/profile" component={ProfilePage}/>
                 <Route path="/devices" component={DevicesPage}>

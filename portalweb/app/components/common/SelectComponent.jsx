@@ -23,7 +23,7 @@ class SelectComponent extends React.Component {
     render() {
         const {options} = this.state;
         return (
-            <select value={this.state.selectedValue} onChange={this.props.onChange}>
+            <select name={this.props.fieldName} value={this.state.selectedValue} onChange={this.props.onChange}>
                 {options.map(option => {
                     return <option value={option.value} key={option.value}>{option.name}</option>
                 })}

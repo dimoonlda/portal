@@ -1,5 +1,6 @@
 import * as actionsTypes from '../actions/actionTypes';
 import initialState from './initialState';
+import {browserHistory} from 'react-router';
 
 export function deviceReducer(state = initialState.userDevices, action){
     switch (action.type) {
@@ -13,6 +14,16 @@ export function deviceReducer(state = initialState.userDevices, action){
         case actionsTypes.LOADING_USER_DEVICES:
             return {
                 isLoading: true
+            };
+            break;
+        case actionsTypes.CREATE_USER_DEVICE_SUCCESS:
+            console.log('device reducer:', action);
+            browserHistory.push(`/devices/${action.device.id}`);
+            return {
+                devices: [
+                    ...state.devices,
+                    Object.assign({}, action.device)
+                ]
             };
             break;
         default:
