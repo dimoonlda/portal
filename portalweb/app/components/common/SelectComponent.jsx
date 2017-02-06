@@ -34,7 +34,7 @@ class SelectComponent extends React.Component {
 
 SelectComponent.propTypes = {
     options: PropTypes.array.isRequired,
-    selectedValue: PropTypes.string,
+    selectedValue: PropTypes.number,
     onChange: PropTypes.func,
     fieldName: PropTypes.string.isRequired
 };

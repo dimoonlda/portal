@@ -8,9 +8,6 @@ import SelectComponent from 'SelectComponent';
 class DeviceForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            device: Object.assign({}, this.props.device)
-        };
     }
 
     getDeviceTypesAsSelectOptions(deviceTypes) {
@@ -26,7 +23,7 @@ class DeviceForm extends React.Component {
     }
 
     render() {
-        let {title, type, model, brand, dateOfManufacturing, url} = this.state.device;
+        let {title, type, model, brand, dateOfManufacturing, url} = this.props.device;
         const {deviceTypes, deviceBrands} = this.props;
         return (
             <div className="row columns">

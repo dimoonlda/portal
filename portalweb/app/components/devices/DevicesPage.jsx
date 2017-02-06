@@ -43,7 +43,7 @@ DevicesPage.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        devices: state.userDevices.devices
+        devices: state.userDevices.devices ? state.userDevices.devices : []
     }
 };
 

@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import {browserHistory} from 'react-router';
 
 import DeviceForm from 'DeviceForm';
+import * as deviceActions from 'deviceActions';
 
 class DevicePage extends React.Component {
     constructor(props, context) {
@@ -11,7 +12,8 @@ class DevicePage extends React.Component {
             device: Object.assign({}, this.props.device),
             deviceBrand: Object.assign({}, this.props.deviceBrand),
             deviceType: Object.assign({}, this.props.deviceType),
-            isEditing: false
+            isEditing: false,
+            saving: false
         }
     }
 
@@ -40,13 +42,22 @@ class DevicePage extends React.Component {
     updateDeviceState = (event) => {
         const field = event.target.name;
         const device = Object.assign({}, this.state.device);
-        console.log('updateDeviceState', event.target.name, event.target.value, this.state.device);
         device[field] = event.target.value;
         return this.setState({device: device});
     };
 
-    saveUserDevice = () => {
-
+    saveUserDevice = (event) => {
+        event.preventDefault();
+        let device = Object.assign({}, this.state.device);
+        console.log('saveUserDevice: ', device);
+        if (!this.state.device.type) {
+            device['type'] = this.props.deviceTypes[0].id;
+        }
+        if (!this.state.device.brand) {
+            device['brand'] = this.props.deviceBrands[0].id;
+        }
+        this.props.saveUserDevice(device);
+        this.setState({saving: true});
     };
 
     cancelEditUserDeviceForm = () => {
@@ -54,7 +65,7 @@ class DevicePage extends React.Component {
     };
 
     render() {
-        const {device, deviceBrand, deviceType, isEditing} = this.state;
+        const {device, deviceBrand, deviceType, isEditing, saving} = this.state;
         const {deviceTypes, deviceBrands} = this.props;
 
         const renderDeviceForm = () => {
@@ -151,7 +162,7 @@ DevicePage.propTypes = {
         id: React.PropTypes.number.isRequired,
         title: React.PropTypes.string.isRequired
     }).isRequired,
-    deviceTitle: React.PropTypes.shape({
+    deviceType: React.PropTypes.shape({
         id: React.PropTypes.number.isRequired,
         title: React.PropTypes.string.isRequired
     }).isRequired,
@@ -159,4 +170,12 @@ DevicePage.propTypes = {
     deviceTypes: React.PropTypes.array.isRequired
 };
 
-export default connect(mapStateToProps)(DevicePage);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        saveUserDevice: (device) => {
+            dispatch(deviceActions.updateUserDevice(device))
+        }
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DevicePage);
