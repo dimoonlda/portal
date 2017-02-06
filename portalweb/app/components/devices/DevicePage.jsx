@@ -1,5 +1,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {browserHistory} from 'react-router';
+
+import DeviceForm from 'DeviceForm';
 
 class DevicePage extends React.Component {
     constructor(props, context) {
@@ -7,7 +10,8 @@ class DevicePage extends React.Component {
         this.state = {
             device: Object.assign({}, this.props.device),
             deviceBrand: Object.assign({}, this.props.deviceBrand),
-            deviceType: Object.assign({}, this.props.deviceType)
+            deviceType: Object.assign({}, this.props.deviceType),
+            isEditing: false
         }
     }
 
@@ -29,19 +33,66 @@ class DevicePage extends React.Component {
         }
     }
 
+    toggleEdit = () => {
+        this.setState({isEditing: !this.state.isEditing})
+    };
+
+    updateDeviceState = (event) => {
+        const field = event.target.name;
+        const device = Object.assign({}, this.state.device);
+        console.log('updateDeviceState', event.target.name, event.target.value, this.state.device);
+        device[field] = event.target.value;
+        return this.setState({device: device});
+    };
+
+    saveUserDevice = () => {
+
+    };
+
+    cancelEditUserDeviceForm = () => {
+        browserHistory.goBack();
+    };
+
     render() {
-        const {device, deviceBrand, deviceType} = this.state;
-        return (
-            <div className="row columns">
-                <p>ID: {device.id}</p>
-                <p>Title: {device.title}</p>
-                <p>Type: {deviceType.title}</p>
-                <p>Brand: {deviceBrand.title}</p>
-                <p>Model: {device.model}</p>
-                <p>Date of manufacturing: {device.dateOfManufacturing}</p>
-                <p>Url: <a href={device.url} target="blank">{device.url}</a></p>
-            </div>
-        )
+        const {device, deviceBrand, deviceType, isEditing} = this.state;
+        const {deviceTypes, deviceBrands} = this.props;
+
+        const renderDeviceForm = () => {
+            return (
+                <div className="row columns">
+                    <DeviceForm device={device}
+                                onChange={this.updateDeviceState}
+                                onSave={this.saveUserDevice}
+                                onCancel={this.cancelEditUserDeviceForm}
+                                deviceBrands={deviceBrands}
+                                deviceTypes={deviceTypes}
+                    />
+                </div>
+            )
+        };
+
+        const renderDeviceShow = () => {
+            return (
+                <div className="row columns">
+                    <p>ID: {device.id}</p>
+                    <p>Title: {device.title}</p>
+                    <p>Type: {deviceType.title}</p>
+                    <p>Brand: {deviceBrand.title}</p>
+                    <p>Model: {device.model}</p>
+                    <p>Date of manufacturing: {device.dateOfManufacturing}</p>
+                    <p>Url: <a href={device.url} target="blank">{device.url}</a></p>
+                    <div className="row">
+                        <div className="medium-12 columns">
+                            <input type="button" onClick={this.toggleEdit}
+                                   className="button float-right"
+                                   value="Edit"/>
+                        </div>
+                    </div>
+                </div>
+            )
+        };
+
+        return isEditing ? renderDeviceForm() : renderDeviceShow();
     }
 }
 
@@ -67,7 +118,6 @@ function mapStateToProps(state, ownProps) {
     const deviceTypes = state.deviceTypes.types;
     let deviceBrand = {};
     let deviceType = {};
-    console.log('mapStateToProps: ', devices, deviceId);
     let device = {};
     if (deviceId && devices) {
         device = getDeviceById(devices, deviceId);
@@ -81,7 +131,9 @@ function mapStateToProps(state, ownProps) {
     return {
         device,
         deviceBrand,
-        deviceType
+        deviceType,
+        deviceBrands,
+        deviceTypes
     }
 }
 
@@ -102,7 +154,9 @@ DevicePage.propTypes = {
     deviceTitle: React.PropTypes.shape({
         id: React.PropTypes.number.isRequired,
         title: React.PropTypes.string.isRequired
-    }).isRequired
+    }).isRequired,
+    deviceBrands: React.PropTypes.array.isRequired,
+    deviceTypes: React.PropTypes.array.isRequired
 };
 
 export default connect(mapStateToProps)(DevicePage);

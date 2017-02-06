@@ -17,11 +17,19 @@ export function deviceReducer(state = initialState.userDevices, action){
             };
             break;
         case actionsTypes.CREATE_USER_DEVICE_SUCCESS:
-            console.log('device reducer:', action);
             browserHistory.push(`/devices/${action.device.id}`);
             return {
                 devices: [
                     ...state.devices,
+                    Object.assign({}, action.device)
+                ]
+            };
+            break;
+        case actionsTypes.UPDATE_USER_DEVICE_SUCCESS:
+            browserHistory.push(`/devices/${action.device.id}`);
+            return {
+                devices: [
+                    ...state.devices.filter(device => device.id !== action.device.id),
                     Object.assign({}, action.device)
                 ]
             };

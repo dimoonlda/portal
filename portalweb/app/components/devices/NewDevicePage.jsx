@@ -23,12 +23,18 @@ class NewDevicePage extends React.Component {
 
     saveUserDevice = (event) => {
         event.preventDefault();
-        this.props.saveUserDevice(this.state.device);
+        let device = Object.assign({}, this.state.device);
+        if (!this.state.device.type) {
+            device['type'] = this.props.deviceTypes[0].id;
+        }
+        if (!this.state.device.brand) {
+            device['brand'] = this.props.deviceBrands[0].id;
+        }
+        this.props.saveUserDevice(device);
         this.setState({saving: true});
     };
 
     cancelUserDeviceForm = () => {
-        console.log('Cancel new device form.');
         browserHistory.goBack();
     };
 

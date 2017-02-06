@@ -49,7 +49,6 @@ class ProfileView extends React.Component {
 
     saveProfile = (event) => {
         event.preventDefault();
-        console.log('Save Profile button event.', this.state);
         this.props.updateUserProfile(this.state.userProfile);
         this.setState({
             saving: true,
@@ -59,7 +58,6 @@ class ProfileView extends React.Component {
 
     cancelProfileForm = (event) => {
         event.preventDefault();
-        console.log('Cancel Profile button event.');
         this.setState({
             isEditing: false,
             userProfile: Object.assign({}, this.state.userProfileBeforeEdit),

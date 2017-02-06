@@ -17,7 +17,6 @@ class ProfilePage extends React.Component {
     }
 
     render() {
-        console.log('ProfilePage: render.', this.props.userProfile, this.props.canEdit);
         const userProfile = this.props.userProfile;
         return (
             <div>
@@ -35,7 +34,6 @@ ProfilePage.propTypes = {
 };
 
 const mapStateToProps = (state) => {
-    console.log('ProfilePage: mapStateToProps.', state.userProfile.data);
     return {
         userProfile: state.userProfile.data,
         canEdit: !state.userProfile.isLoading

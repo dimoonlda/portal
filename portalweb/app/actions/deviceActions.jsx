@@ -44,7 +44,6 @@ export const createUserDeviceSuccess = (device) => {
 };
 
 export const createUserDevice = (device) => {
-    console.log('Create device:', device);
     return (dispatch) => {
         dispatch(creatingUserDevice());
         axios.post("http://localhost:8080/devices",
@@ -59,6 +58,36 @@ export const createUserDevice = (device) => {
         ).then(function (response) {
             if (response.status === 200) {
                 dispatch(createUserDeviceSuccess(response.data.data))
+            }
+        }).catch(function (error) {
+            console.log(error);
+        })
+    }
+};
+
+export const updateUserDeviceSuccess = (device) => {
+    return {
+        type: actionsTypes.UPDATE_USER_DEVICE_SUCCESS,
+        device
+    }
+};
+
+export const updateUserDevice = (device) => {
+    return (dispatch) => {
+        dispatch(creatingUserDevice());
+        axios.post("http://localhost:8080/devices",
+            {
+                "id": device.id,
+                "title": device.title,
+                "model": device.model,
+                "dateOfManufacturing": device.dateOfManufacturing,
+                "url": device.url,
+                "type": device.type,
+                "brand": device.brand
+            }
+        ).then(function (response) {
+            if (response.status === 200) {
+                dispatch(updateUserDeviceSuccess(response.data.data))
             }
         }).catch(function (error) {
             console.log(error);

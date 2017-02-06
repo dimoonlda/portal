@@ -28,8 +28,6 @@ class DeviceForm extends React.Component {
     render() {
         let {title, type, model, brand, dateOfManufacturing, url} = this.state.device;
         const {deviceTypes, deviceBrands} = this.props;
-        console.log('deviceTypes: ', deviceTypes);
-        console.log('deviceBrands: ', deviceBrands);
         return (
             <div className="row columns">
                 <div className="callout secondary medium-12 columns">

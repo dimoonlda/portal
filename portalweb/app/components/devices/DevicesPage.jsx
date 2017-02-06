@@ -12,7 +12,6 @@ class DevicesPage extends React.Component {
     }
 
     componentDidMount() {
-        console.log('DevicesPage did mount: ', this.props.devices);
         this.props.loadUserDevices();
     }
 
