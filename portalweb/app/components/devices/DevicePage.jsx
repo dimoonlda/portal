@@ -12,12 +12,14 @@ class DevicePage extends React.Component {
             device: Object.assign({}, this.props.device),
             deviceBrand: Object.assign({}, this.props.deviceBrand),
             deviceType: Object.assign({}, this.props.deviceType),
+            previousDevice: Object.assign({}, this.props.device),
             isEditing: false,
             saving: false
         }
     }
 
     componentWillReceiveProps(nextProps) {
+        //console.log('DevicePage - componentWillReceiveProps:', nextProps);
         if (this.props.device.id != nextProps.device.id) {
             this.setState({
                 device: Object.assign({}, nextProps.device)
@@ -33,6 +35,7 @@ class DevicePage extends React.Component {
                 deviceType: Object.assign({}, nextProps.deviceType)
             });
         }
+        this.setState({isEditing: false, saving: false});
     }
 
     toggleEdit = () => {
@@ -60,8 +63,13 @@ class DevicePage extends React.Component {
         this.setState({saving: true});
     };
 
+    deleteUserDevice = () => {
+
+    };
+
     cancelEditUserDeviceForm = () => {
-        browserHistory.goBack();
+        this.setState({isEditing: false, saving: false});
+        browserHistory.push(`/devices/${this.state.device.id}`);
     };
 
     render() {
@@ -92,11 +100,13 @@ class DevicePage extends React.Component {
                     <p>Model: {device.model}</p>
                     <p>Date of manufacturing: {device.dateOfManufacturing}</p>
                     <p>Url: <a href={device.url} target="blank">{device.url}</a></p>
-                    <div className="row">
-                        <div className="medium-12 columns">
+                    <div className="row columns">
+                        <div className="button-group float-right">
                             <input type="button" onClick={this.toggleEdit}
-                                   className="button float-right"
+                                   className="button"
                                    value="Edit"/>
+                            <input type="button" className="button"
+                                   value="Delete" onClick={this.deleteUserDevice}/>
                         </div>
                     </div>
                 </div>
