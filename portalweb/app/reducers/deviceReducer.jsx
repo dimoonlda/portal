@@ -34,6 +34,14 @@ export function deviceReducer(state = initialState.userDevices, action){
                 ]
             };
             break;
+        case actionsTypes.DELETE_USER_DEVICE_SUCCESS:
+            browserHistory.push(`/devices`);
+            return {
+                devices: [
+                    ...state.devices.filter(device => device.id !== action.deviceId)
+                ]
+            };
+            break;
         default:
             return state;
     }

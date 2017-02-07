@@ -95,6 +95,26 @@ export const updateUserDevice = (device) => {
     }
 };
 
+export const deleteUserDeviceSuccess = (deviceId) => {
+    return {
+        type: actionsTypes.DELETE_USER_DEVICE_SUCCESS,
+        deviceId
+    }
+};
+
+export const deleteUserDevice = (deviceId) => {
+    return (dispatch) => {
+        axios.delete(`http://localhost:8080/devices/${deviceId}`)
+            .then(function (response) {
+                if (response.status === 200) {
+                    dispatch(deleteUserDeviceSuccess(deviceId))
+                }
+            }).catch(function (error) {
+                console.log(error);
+            })
+    }
+};
+
 //Start device types
 export const loadingDeviceTypes = () => {
     return {

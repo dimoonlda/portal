@@ -6,10 +6,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 import ua.kiev.dimoon.portal.back.controllers.interfaces.DeviceController;
 import ua.kiev.dimoon.portal.back.model.domain.Device;
@@ -72,6 +69,19 @@ public class DeviceControllerImpl implements DeviceController {
                         new ResponseEntity<>(new BaseResult<>(savedDevice), HttpStatus.OK)
                 );
             }
+        });
+        return deferredResult;
+    }
+
+    @Override
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public DeferredResult<ResponseEntity<BaseResult<Void>>> delete(@PathVariable Long id) {
+        DeferredResult<ResponseEntity<BaseResult<Void>>> deferredResult = new DeferredResult<>();
+        deviceRepository.delete(id).whenComplete((aVoid, throwable) -> {
+            if (Objects.nonNull(throwable)) {
+                deferredResult.setErrorResult(throwable.getCause());
+            }
+            deferredResult.setResult(new ResponseEntity<>(new BaseResult<>(), HttpStatus.OK));
         });
         return deferredResult;
     }

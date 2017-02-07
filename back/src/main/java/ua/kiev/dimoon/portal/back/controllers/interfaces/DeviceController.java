@@ -14,4 +14,5 @@ public interface DeviceController {
     DeferredResult<ResponseEntity<BaseResult<List<Device>>>> getUserDevices();
 
     DeferredResult<ResponseEntity<BaseResult<Device>>> createOrUpdate(Device device);
+    DeferredResult<ResponseEntity<BaseResult<Void>>> delete(Long id);
 }

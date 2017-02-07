@@ -64,7 +64,7 @@ class DevicePage extends React.Component {
     };
 
     deleteUserDevice = () => {
-
+        this.props.deleteUserDevice(this.state.device.id);
     };
 
     cancelEditUserDeviceForm = () => {
@@ -184,6 +184,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         saveUserDevice: (device) => {
             dispatch(deviceActions.updateUserDevice(device))
+        },
+        deleteUserDevice: (deviceId) => {
+            dispatch(deviceActions.deleteUserDevice(deviceId))
         }
     }
 };

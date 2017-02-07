@@ -19,4 +19,7 @@ public interface DeviceRepository extends Repository<Device, Long> {
 
     @Async
     <S extends Device> CompletableFuture<S> save(S device);
+
+    @Async
+    CompletableFuture<Void> delete(Long id);
 }
