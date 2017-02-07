@@ -41,9 +41,13 @@ DevicesPage.propTypes = {
     children: PropTypes.object
 };
 
+const sortDevicesById = (devices) => {
+    return devices.sort((d1, d2) => (d1.id > d2.id) ? 1 : ((d1.id < d2.id) ? -1 : 0));
+};
+
 const mapStateToProps = (state) => {
     return {
-        devices: state.userDevices.devices ? state.userDevices.devices : []
+        devices: sortDevicesById(state.userDevices.devices ? state.userDevices.devices : [])
     }
 };
 
