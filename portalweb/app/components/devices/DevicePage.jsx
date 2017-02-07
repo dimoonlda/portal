@@ -19,7 +19,6 @@ class DevicePage extends React.Component {
     }
 
     componentWillReceiveProps(nextProps) {
-        //console.log('DevicePage - componentWillReceiveProps:', nextProps);
         if (this.props.device.id != nextProps.device.id) {
             this.setState({
                 device: Object.assign({}, nextProps.device)
@@ -45,7 +44,11 @@ class DevicePage extends React.Component {
     updateDeviceState = (event) => {
         const field = event.target.name;
         const device = Object.assign({}, this.state.device);
-        device[field] = event.target.value;
+        if (field == 'type' || field == 'brand') {
+            device[field] = parseInt(event.target.value);
+        } else {
+            device[field] = event.target.value;
+        }
         return this.setState({device: device});
     };
 

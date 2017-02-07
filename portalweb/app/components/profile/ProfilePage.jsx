@@ -33,6 +33,10 @@ ProfilePage.propTypes = {
     userProfile: PropTypes.object.isRequired
 };
 
+ProfilePage.defaultProps = {
+    userProfile: {}
+};
+
 const mapStateToProps = (state) => {
     return {
         userProfile: state.userProfile.data,

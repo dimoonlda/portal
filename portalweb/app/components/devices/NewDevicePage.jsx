@@ -17,7 +17,11 @@ class NewDevicePage extends React.Component {
     updateDeviceState = (event) => {
         const field = event.target.name;
         const device = this.state.device;
-        device[field] = event.target.value;
+        if (field == 'type' || field == 'brand') {
+            device[field] = parseInt(event.target.value);
+        } else {
+            device[field] = event.target.value;
+        }
         return this.setState({device: device});
     };
 
