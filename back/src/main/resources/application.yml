@@ -19,4 +19,5 @@ spring:
     password: portal
 logging:
   level:
+#    ROOT: 'DEBUG'
     ua.kiev.dimoon.portal.back: 'DEBUG'
