@@ -1,14 +1,15 @@
 import React from 'react';
 
-import {Header} from 'Header';
 import {Navigation} from 'Navigation';
-import Footer from 'Footer';
 
-export var Main = React.createClass({
-    render: function() {
+class MainPortal extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
         return (
             <div>
-                <Header/>
                 <div className="row">
                     <aside className="medium-2 large-2 columns">
                         <Navigation/>
@@ -17,8 +18,9 @@ export var Main = React.createClass({
                         {this.props.children}
                     </div>
                 </div>
-                <Footer/>
             </div>
         )
     }
-});
+}
+
+export default MainPortal;

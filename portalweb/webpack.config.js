@@ -38,6 +38,9 @@ module.exports = {
         './app/components/profile',
         './app/components/devices',
         './app/components/common',
+        './app/components/main',
+        './app/components/navigation',
+        './middleware',
       './app/api'
     ],
     alias: {
@@ -48,7 +51,10 @@ module.exports = {
       userProfileReducer: 'app/reducers/userProfileReducer.jsx',
         deviceReducer: 'app/reducers/deviceReducer.jsx',
       configureStore: 'app/store/configureStore.jsx',
-      actionTypes: 'app/actions/actionTypes.jsx'
+      actionTypes: 'app/actions/actionTypes.jsx',
+        tokenActions: 'app/actions/tokenAction.jsx',
+        tokenReducer: 'app/reducers/tokenReducer.jsx',
+        tokenService: 'app/services/token/token.jsx'
     },
     extensions: ['', '.js', '.jsx']
   },

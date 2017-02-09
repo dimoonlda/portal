@@ -18,5 +18,9 @@ export default {
         brands: [],
         isLoading: false,
         error: null
+    },
+    token: {
+        accessToken: null,
+        refreshToken: null
     }
 }
