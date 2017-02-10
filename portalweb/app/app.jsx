@@ -16,17 +16,18 @@ import MainPortal from 'MainPortal';
 import * as userProfileActions from 'userProfileActions';
 import * as deviceActions from 'deviceActions';
 import * as tokenService from 'tokenService';
-import * as tokenActions from 'deviceActions';
+import * as tokenActions from 'tokenActions';
 
 var store = require('configureStore').configure();
 
 //store.dispatch(userProfileActions.loadUserProfile());
-if (tokenService.getAccessTokenFromSessionStorage()) {
-    store.dispatch(tokenActions.getAccessTokenFromServer('dimoon', 'dima'));
+if (!tokenService.getAccessTokenFromSessionStorage()) {
+    tokenActions.getAccessTokenFromServer2('dimoon', 'dima');
+    //store.dispatch(tokenActions.getAccessTokenFromServer('dimoon', 'dima'));
 }
 
-store.dispatch(deviceActions.loadDeviceTypes());
-store.dispatch(deviceActions.loadDeviceBrands());
+//store.dispatch(deviceActions.loadDeviceTypes());
+//store.dispatch(deviceActions.loadDeviceBrands());
 
 // Load foundation
 $(document).foundation();
