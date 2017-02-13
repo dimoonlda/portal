@@ -1,6 +1,7 @@
 package ua.kiev.dimoon.portal.back.controllers.interfaces;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.web.context.request.async.DeferredResult;
 import ua.kiev.dimoon.portal.back.model.domain.Device;
 import ua.kiev.dimoon.portal.back.model.dto.BaseResult;
@@ -18,4 +19,6 @@ public interface UserController {
     DeferredResult<ResponseEntity<BaseResult<UserProfile>>> getUserProfile();
     DeferredResult<ResponseEntity<BaseResult<UserProfile>>> updateUserProfile(UserProfile userProfile);
     //DeferredResult<ResponseEntity<BaseResult<List<Device>>>> getDevicesByUserId(Long userId);
+    ResponseEntity<BaseResult<OAuth2AccessToken>> login(String username, String password);
+    ResponseEntity<BaseResult<OAuth2AccessToken>> refresh(String refreshToken);
 }

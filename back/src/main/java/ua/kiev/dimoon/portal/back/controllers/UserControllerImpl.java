@@ -1,20 +1,30 @@
 package ua.kiev.dimoon.portal.back.controllers;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.oauth2.client.OAuth2RestTemplate;
+import org.springframework.security.oauth2.client.resource.BaseOAuth2ProtectedResourceDetails;
+import org.springframework.security.oauth2.client.token.DefaultAccessTokenRequest;
+import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordAccessTokenProvider;
+import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
+import org.springframework.security.oauth2.common.DefaultOAuth2RefreshToken;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
+import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.async.DeferredResult;
 import ua.kiev.dimoon.portal.back.controllers.interfaces.UserController;
-import ua.kiev.dimoon.portal.back.model.domain.Device;
-import ua.kiev.dimoon.portal.back.model.dto.BaseResult;
 import ua.kiev.dimoon.portal.back.model.domain.User;
+import ua.kiev.dimoon.portal.back.model.dto.BaseResult;
 import ua.kiev.dimoon.portal.back.model.dto.UserProfile;
-import ua.kiev.dimoon.portal.back.repositories.DeviceRepository;
 import ua.kiev.dimoon.portal.back.services.interfaces.UserService;
 
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -24,9 +34,15 @@ import java.util.Objects;
 @RestController
 @RequestMapping("/users")
 public class UserControllerImpl implements UserController {
+    private static final Logger LOG = LoggerFactory.getLogger(UserControllerImpl.class);
 
     private UserService userService;
+    private OAuth2RestTemplate usbOauthRestTemplate;
 
+    @Autowired
+    public void setUsbOauthRestTemplate(OAuth2RestTemplate usbOauthRestTemplate) {
+        this.usbOauthRestTemplate = usbOauthRestTemplate;
+    }
     @Autowired
     public UserControllerImpl setUserService(UserService userService) {
         this.userService = userService;
@@ -107,6 +123,64 @@ public class UserControllerImpl implements UserController {
             }
         });
         return deferredResult;
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ResponseEntity<BaseResult<OAuth2AccessToken>> login(
+            @RequestParam String username,
+            @RequestParam String password) {
+        LOG.debug("Loggin in " + username);
+        OAuth2AccessToken token;
+        try {
+            ResourceOwnerPasswordAccessTokenProvider provider = new ResourceOwnerPasswordAccessTokenProvider();
+            ResourceOwnerPasswordResourceDetails resourceDetails = (ResourceOwnerPasswordResourceDetails) usbOauthRestTemplate.getResource();
+            resourceDetails.setUsername(username);
+            resourceDetails.setPassword(password);
+            //usbOauthRestTemplate.getOAuth2ClientContext().setAccessToken(null);
+            //token = usbOauthRestTemplate.getAccessToken();
+
+            //We have to use provider because usbOauthRestTemplate.getAccessToken() creates session
+            // and use it in order to get new or refresh access token
+            token = provider.obtainAccessToken(resourceDetails, new DefaultAccessTokenRequest());
+        }catch (OAuth2Exception ade){
+            LOG.debug("Can't get access token for username = {}.", username, ade);
+            return new ResponseEntity<>(new BaseResult<Void>()
+                    .setErrorCode(ade.getHttpErrorCode())
+                    .setErrorMessage(ade.getMessage()),
+                    HttpStatus.valueOf(ade.getHttpErrorCode()));
+        }catch (Exception e){
+            LOG.debug("Unexpected exception for username = {}.", username, e);
+            throw new RuntimeException("Unexpected exception.");
+        }
+        LOG.debug("User {}, got access token: {}", username, token.getValue());
+        return new ResponseEntity<>(new BaseResult<>(token), HttpStatus.OK);
+    }
+
+    @Override
+    @RequestMapping(value = "/refresh", method = RequestMethod.POST)
+    public ResponseEntity<BaseResult<OAuth2AccessToken>> refresh(
+            @RequestParam String refreshToken){
+        LOG.debug("Refreshing access token by refresh token = {}", refreshToken);
+        OAuth2AccessToken accessToken;
+        try {
+            ResourceOwnerPasswordAccessTokenProvider provider = new ResourceOwnerPasswordAccessTokenProvider();
+            BaseOAuth2ProtectedResourceDetails resourceDetails =
+                    (BaseOAuth2ProtectedResourceDetails) usbOauthRestTemplate.getResource();
+            DefaultOAuth2RefreshToken token = new DefaultOAuth2RefreshToken(refreshToken);
+            accessToken =
+                    provider.refreshAccessToken(resourceDetails, token, new DefaultAccessTokenRequest());
+        }catch (OAuth2Exception ade){
+            LOG.debug("Can't get access token for refresh token = {}.", refreshToken, ade);
+            return new ResponseEntity<>(new BaseResult<Void>()
+                    .setErrorCode(ade.getHttpErrorCode())
+                    .setErrorMessage(ade.getMessage()),
+                    HttpStatus.valueOf(ade.getHttpErrorCode()));
+        }catch (Exception e){
+            LOG.debug("Unexpected exception for refresh token = {}.", refreshToken, e);
+            throw new RuntimeException("Unexpected exception.");
+        }
+        LOG.debug("Sent new access token = {} for refresh token = {}", accessToken.getValue(), refreshToken);
+        return new ResponseEntity<>(new BaseResult<>(accessToken), HttpStatus.OK);
     }
 
 /*
