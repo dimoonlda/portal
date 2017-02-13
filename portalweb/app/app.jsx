@@ -7,7 +7,7 @@ import ProfilePage from 'ProfilePage';
 import {Main} from 'Main';
 import MainPage from 'MainPage';
 import {Home} from 'Home';
-import Login from 'Login';
+import LoginPage from 'LoginPage';
 import DevicesPage from 'DevicesPage';
 import DevicePage from 'DevicePage';
 import NewDevicePage from 'NewDevicePage';
@@ -22,7 +22,6 @@ var store = require('configureStore').configure();
 
 //store.dispatch(userProfileActions.loadUserProfile());
 if (!tokenService.getAccessTokenFromSessionStorage()) {
-    tokenActions.getAccessTokenFromServer2('dimoon', 'dima');
     //store.dispatch(tokenActions.getAccessTokenFromServer('dimoon', 'dima'));
 }
 
@@ -46,7 +45,7 @@ ReactDOM.render(
                         <Route path="/portal/devices/:id" component={DevicePage}/>
                     </Route>
                 </Route>
-                <Route path="/login" component={Login}/>
+                <Route path="/login" component={LoginPage}/>
                 <IndexRoute component={Home}/>
             </Route>
         </Router>

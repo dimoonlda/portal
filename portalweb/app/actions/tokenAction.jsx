@@ -19,6 +19,7 @@ export const updateRefreshTokenSuccess = (refreshToken) => {
 
 export const getAccessTokenFromServer = (userName, password) => {
     return (dispatch) => {
+        console.log('getAccessTokenFromServer: ', userName);
         var instance = axios.create({
             headers: {'Authorization': 'Basic cG9ydGFsUmVhY3Q6MTIzNDU2Nzg5'},
             withCredentials: true
@@ -29,13 +30,12 @@ export const getAccessTokenFromServer = (userName, password) => {
             }
 */
         });
-        instance.post(`http://localhost:8080/oauth/token?grant_type=password&username=${userName}&password=${password}&client_id=portalReact`,
-            null/*, {headers: {'Authorization': 'Basic cG9ydGFsUmVhY3Q6MTIzNDU2Nzg5'}}*/)
+        axios.post(`http://localhost:8080/users/login?username=${userName}&password=${password}`, null)
             .then(function (response) {
-                console.log('response: ', response);
                 if (response.status === 200) {
-                    sessionStorage.setItem(tokenService.ACCESS_TOKEN_STORAGE_KEY, response.data.access_token);
-                    sessionStorage.setItem(tokenService.REFRESH_TOKEN_STORAGE_KEY, response.data.refresh_token);
+                    console.log('getAccessTokenFromServer ACCESS_TOKEN_STORAGE_KEY: ', tokenService.ACCESS_TOKEN_STORAGE_KEY);
+                    sessionStorage.setItem(tokenService.ACCESS_TOKEN_STORAGE_KEY, response.data.data.access_token);
+                    sessionStorage.setItem(tokenService.REFRESH_TOKEN_STORAGE_KEY, response.data.data.refresh_token);
                     dispatch(updateAccessTokenSuccess(response.data.access_token));
                     dispatch(updateRefreshTokenSuccess(response.data.refresh_token));
                 }

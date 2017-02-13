@@ -33,15 +33,16 @@ module.exports = {
   resolve: {
     root: __dirname,
     modulesDirectories: [
-      'node_modules',
-      './app/components',
+        'node_modules',
+        './app/components',
         './app/components/profile',
         './app/components/devices',
         './app/components/common',
         './app/components/main',
         './app/components/navigation',
+        './app/components/login',
         './middleware',
-      './app/api'
+        './app/api'
     ],
     alias: {
       app: 'app',

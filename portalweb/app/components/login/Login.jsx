@@ -1,7 +1,11 @@
 import React from 'react';
 
-export default React.createClass({
-    render: function () {
+class Login extends React.Component{
+    constructor(props) {
+        super(props);
+    }
+
+    render () {
         return (
             <div className="row">
                 <div className="medium-4 small-centered columns">
@@ -10,13 +14,13 @@ export default React.createClass({
                         <hr/>
                         <form>
                             <div className="row columns">
-                                <input type="email" placeholder="E-mail"/>
+                                <input type="text" name="login" onChange={this.props.onChange} placeholder="Login"/>
                             </div>
                             <div className="row columns">
-                                <input type="password" placeholder="Password"/>
+                                <input type="password" name="password" onChange={this.props.onChange} placeholder="Password"/>
                             </div>
                             <div className="row columns">
-                                <button type="submit" className="button expanded">Login</button>
+                                <button type="submit" onClick={this.props.onLogin} className="button expanded">Login</button>
                             </div>
                         </form>
                     </div>
@@ -24,4 +28,11 @@ export default React.createClass({
             </div>
         )
     }
-});
+};
+
+Login.propTypes = {
+    onChange: React.PropTypes.func.isRequired,
+    onLogin: React.PropTypes.func
+};
+
+export default Login;

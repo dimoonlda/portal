@@ -11,11 +11,11 @@ export class Main extends React.Component {
     }
 
     componentDidMount() {
-/*        if (this.props.accessToken) {
+        if (this.props.accessToken) {
             browserHistory.push('/portal');
         } else {
             browserHistory.push('/login');
-        }*/
+        }
     }
 
     render(){
