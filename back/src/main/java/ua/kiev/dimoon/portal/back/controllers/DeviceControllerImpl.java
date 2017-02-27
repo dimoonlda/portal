@@ -12,7 +12,6 @@ import ua.kiev.dimoon.portal.back.controllers.interfaces.DeviceController;
 import ua.kiev.dimoon.portal.back.model.domain.Device;
 import ua.kiev.dimoon.portal.back.model.dto.BaseResult;
 import ua.kiev.dimoon.portal.back.repositories.DeviceRepository;
-import ua.kiev.dimoon.portal.back.services.DeviceServiceImpl;
 import ua.kiev.dimoon.portal.back.services.interfaces.DeviceService;
 
 import javax.validation.Valid;
@@ -42,7 +41,7 @@ public class DeviceControllerImpl implements DeviceController {
     public DeferredResult<ResponseEntity<BaseResult<List<Device>>>> getUserDevices() {
         Long userId = 1L;
         DeferredResult<ResponseEntity<BaseResult<List<Device>>>> deferredResult = new DeferredResult<>();
-        deviceRepository.findByUserId(userId).whenComplete((devices, throwable) -> {
+        deviceRepository.findByUser_Id(userId).whenComplete((devices, throwable) -> {
             if (Objects.nonNull(throwable)) {
                 deferredResult.setErrorResult(throwable.getCause());
             } else {
