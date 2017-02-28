@@ -7,14 +7,16 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@Entity(name = "devices")
+@Entity
+@Access(AccessType.FIELD)
+@Table(name = "devices")
 public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "device_gen")
     @SequenceGenerator(name = "device_gen", sequenceName = "devices_id_seq", allocationSize = 1)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
     @JsonIdentityInfo(
@@ -22,9 +24,10 @@ public class Device {
             property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     @JoinColumn(name = "type_id", nullable = false)
-    @ManyToOne
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DeviceType type;
 
+    @Column(name = "model", nullable = false)
     private String model;
 
     @JsonIdentityInfo(
@@ -32,17 +35,18 @@ public class Device {
             property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     @JoinColumn(name = "brand_id", nullable = false)
-    @ManyToOne
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private DeviceBrand brand;
 
     @Column(name = "dateofmanufacturing")
     private LocalDate dateOfManufacturing;
 
-    @ManyToOne
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @JsonBackReference
     private User user;
 
+    @Column(name = "url", length = 1024)
     private String url;
 
     public Long getId() {

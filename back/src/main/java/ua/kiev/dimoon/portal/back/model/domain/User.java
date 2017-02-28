@@ -13,7 +13,8 @@ import java.util.Set;
  * Created by lutay.d on 23.01.2017.
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@Entity(name = "users")
+@Table(name = "users")
+@Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_gen")
@@ -23,16 +24,16 @@ public class User {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     private String login;
 
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "firstname")
+    @Column(name = "firstname", length = 100)
     private String firstName;
 
-    @Column(name = "lastname")
+    @Column(name = "lastname", length = 100)
     private String lastName;
 
     @Column(name = "dateofbirth")

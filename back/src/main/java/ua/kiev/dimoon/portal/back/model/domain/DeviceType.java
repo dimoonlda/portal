@@ -9,7 +9,8 @@ import java.util.Objects;
 
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@Entity(name = "device_types")
+@Entity
+@Table(name = "device_types")
 public class DeviceType {
     @Id
     @GeneratedValue(generator = "device_types_gen", strategy = GenerationType.SEQUENCE)

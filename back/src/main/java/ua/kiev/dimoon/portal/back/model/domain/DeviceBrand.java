@@ -1,8 +1,6 @@
 package ua.kiev.dimoon.portal.back.model.domain;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
 
@@ -10,7 +8,8 @@ import javax.persistence.*;
  * Created by lutay.d on 30.01.2017.
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-@Entity(name = "device_brands")
+@Entity
+@Table(name = "device_brands")
 public class DeviceBrand {
     @Id
     @GeneratedValue(generator = "device_brands_gen", strategy = GenerationType.SEQUENCE)
